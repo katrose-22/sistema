@@ -20,4 +20,8 @@ class JefePasante extends Model
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');
     }
+     public function boletas()
+    {
+        return $this->hasMany(BoletaInscripcion::class, 'id_jefe');
+    }
 }
