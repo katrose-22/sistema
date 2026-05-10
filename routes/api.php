@@ -24,6 +24,7 @@ Route::get('/test', function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/RegistrarUsuario', [AuthController::class, 'RegistroUsuario']);
 
 Route::middleware('auth:sanctum')->group(function () {
 

@@ -20,7 +20,7 @@ class Usuario extends Authenticatable
         'email',
         'contrasena',
         'telefono',
-        'rol',
+        'id_rol',
     ];
 
     protected $hidden = [
@@ -37,18 +37,13 @@ class Usuario extends Authenticatable
         return $this->hasOne(Pasante::class, 'id_usuario', 'id_usuario');
     }
 
-    public function tutor()
-    {
-        return $this->hasOne(Tutor::class, 'id_usuario', 'id_usuario');
-    }
-
     public function gerente()
     {
         return $this->hasOne(Gerente::class, 'id_usuario', 'id_usuario');
     }
 
-    public function jefe()
+    public function rol()
     {
-        return $this->hasOne(JefePasante::class, 'id_usuario', 'id_usuario');
+        return $this->belongsTo(Rol::class, 'id_rol', 'id_rol');
     }
 }
