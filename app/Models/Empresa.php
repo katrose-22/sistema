@@ -15,15 +15,21 @@ class Empresa extends Model
         'nombre',
         'direccion',
         'telefono',
-        'nit'
+        'nit',
     ];
-    public function gerentes()
-{
-    return $this->hasMany(Gerente::class, 'id_empresa');
-}
 
-public function pasantias()
-{
-    return $this->hasMany(Pasantia::class, 'id_empresa');
-}
+    public function gerente()
+    {
+        return $this->hasOne(Gerente::class, 'id_empresa', 'id_empresa');
+    }
+
+    public function pasantias()
+    {
+        return $this->hasMany(Pasantia::class, 'id_empresa', 'id_empresa');
+    }
+
+    public function encargadosPasantes()
+    {
+        return $this->hasMany(JefePasante::class, 'id_empresa', 'id_empresa');
+    }
 }

@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\Gerente\GerenteDashboardController;
 use App\Http\Controllers\Api\Gerente\EmpresaGerenteController;
 use App\Http\Controllers\Api\Gerente\PasantiaGerenteController;
 use App\Http\Controllers\Api\Gerente\JefePasanteGerenteController;
-
+use App\Http\Controllers\Api\Jefe\ActividadJefeController;
 use App\Http\Controllers\Api\Pasante\PasanteDashboardController;
 use App\Http\Controllers\Api\Pasante\PerfilPasanteController;
 use App\Http\Controllers\Api\Pasante\HojaVidaController;
@@ -32,7 +32,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
 
     Route::prefix('gerente')->group(function () {
-        Route::get('/dashboard', [GerenteDashboardController::class, 'index']);
+        Route::get('/MostrarMiEmpresa', [EmpresaGerenteController::class, 'MostrarMiEmpresa']);
+        Route::post('/RegistarMiEmpresa', [EmpresaGerenteController::class, 'RegistarMiEmpresa']);
+        Route::put('/empresa', [EmpresaGerenteController::class, 'update']);
+        Route::get('/jefes-pasantes', [JefePasanteGerenteController::class, 'index']);
+        Route::post('/jefes-pasantes', [JefePasanteGerenteController::class, 'store']);
+
+        Route::get('/pasantias', [PasantiaGerenteController::class, 'index']);
+        Route::post('/pasantias', [PasantiaGerenteController::class, 'store']);
+        Route::get('/pasantias/{id}', [PasantiaGerenteController::class, 'show']);
+        Route::put('/pasantias/{id}', [PasantiaGerenteController::class, 'update']);
+        Route::patch('/pasantias/{id}/estado', [PasantiaGerenteController::class, 'cambiarEstado']);
+        Route::delete('/pasantias/{id}', [PasantiaGerenteController::class, 'destroy']);
+
         Route::get('/perfil', [GerenteDashboardController::class, 'perfil']);
 
         Route::get('/empresa', [EmpresaGerenteController::class, 'show']);
@@ -46,6 +58,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/pasantias/{id}/estado', [PasantiaGerenteController::class, 'cambiarEstado']);
 
         Route::get('/jefes-pasantes', [JefePasanteGerenteController::class, 'index']);
+    });
+
+    Route::prefix('jefe')->group(function () {
+        Route::get('/pasantias', [ActividadJefeController::class, 'pasantiasAsignadas']);
+
+        Route::get('/actividades', [ActividadJefeController::class, 'index']);
+        Route::post('/actividades', [ActividadJefeController::class, 'store']);
+        Route::get('/actividades/{id}', [ActividadJefeController::class, 'show']);
+        Route::put('/actividades/{id}', [ActividadJefeController::class, 'update']);
+        Route::delete('/actividades/{id}', [ActividadJefeController::class, 'destroy']);
     });
 
     Route::prefix('pasante')->group(function () {

@@ -8,6 +8,7 @@ class Actividad extends Model
 {
     protected $table = 'actividad';
     protected $primaryKey = 'id_actividad';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -15,6 +16,11 @@ class Actividad extends Model
         'titulo',
         'fecha_inicio',
         'fecha_fin',
-        'id_pasantia'
+        'id_pasantia',
     ];
+
+    public function pasantia()
+    {
+        return $this->belongsTo(Pasantia::class, 'id_pasantia', 'id_pasantia');
+    }
 }
