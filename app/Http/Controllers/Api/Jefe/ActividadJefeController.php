@@ -28,9 +28,9 @@ class ActividadJefeController extends Controller
     {
         $jefe = $this->obtenerJefeAutenticado($request);
 
-        if (!$jefe) {
+        if (! $jefe) {
             return response()->json([
-                'message' => 'El usuario autenticado no es encargado de pasante.'
+                'message' => 'El usuario autenticado no es encargado de pasante.',
             ], 403);
         }
 
@@ -40,7 +40,7 @@ class ActividadJefeController extends Controller
             ->get();
 
         return response()->json([
-            'pasantias' => $pasantias
+            'pasantias' => $pasantias,
         ]);
     }
 
@@ -48,9 +48,9 @@ class ActividadJefeController extends Controller
     {
         $jefe = $this->obtenerJefeAutenticado($request);
 
-        if (!$jefe) {
+        if (! $jefe) {
             return response()->json([
-                'message' => 'El usuario autenticado no es encargado de pasante.'
+                'message' => 'El usuario autenticado no es encargado de pasante.',
             ], 403);
         }
 
@@ -60,7 +60,7 @@ class ActividadJefeController extends Controller
         if ($pasantiasIds->isEmpty()) {
             return response()->json([
                 'message' => 'No tienes pasantías asignadas.',
-                'actividades' => []
+                'actividades' => [],
             ]);
         }
 
@@ -70,7 +70,7 @@ class ActividadJefeController extends Controller
             ->get();
 
         return response()->json([
-            'actividades' => $actividades
+            'actividades' => $actividades,
         ]);
     }
 
@@ -78,9 +78,9 @@ class ActividadJefeController extends Controller
     {
         $jefe = $this->obtenerJefeAutenticado($request);
 
-        if (!$jefe) {
+        if (! $jefe) {
             return response()->json([
-                'message' => 'El usuario autenticado no es encargado de pasante.'
+                'message' => 'El usuario autenticado no es encargado de pasante.',
             ], 403);
         }
 
@@ -90,6 +90,7 @@ class ActividadJefeController extends Controller
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'id_pasantia' => 'required|integer|exists:pasantia,id_pasantia',
+            'avance' => 'nullable|integer|min:0|max:100',
         ]);
 
         $pasantia = $this->verificarPasantiaAsignada(
@@ -97,9 +98,9 @@ class ActividadJefeController extends Controller
             $jefe->id_usuario
         );
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'No puedes crear actividades en una pasantía que no tienes asignada.'
+                'message' => 'No puedes crear actividades en una pasantía que no tienes asignada.',
             ], 403);
         }
 
@@ -109,13 +110,14 @@ class ActividadJefeController extends Controller
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'id_pasantia' => $request->id_pasantia,
+            'avance' => $request->avance ?? 0,
         ]);
 
         $actividad->load('pasantia');
 
         return response()->json([
             'message' => 'Actividad registrada correctamente.',
-            'actividad' => $actividad
+            'actividad' => $actividad,
         ], 201);
     }
 
@@ -123,9 +125,9 @@ class ActividadJefeController extends Controller
     {
         $jefe = $this->obtenerJefeAutenticado($request);
 
-        if (!$jefe) {
+        if (! $jefe) {
             return response()->json([
-                'message' => 'El usuario autenticado no es encargado de pasante.'
+                'message' => 'El usuario autenticado no es encargado de pasante.',
             ], 403);
         }
 
@@ -133,9 +135,9 @@ class ActividadJefeController extends Controller
             ->where('id_actividad', $id)
             ->first();
 
-        if (!$actividad) {
+        if (! $actividad) {
             return response()->json([
-                'message' => 'Actividad no encontrada.'
+                'message' => 'Actividad no encontrada.',
             ], 404);
         }
 
@@ -144,14 +146,14 @@ class ActividadJefeController extends Controller
             $jefe->id_usuario
         );
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'No tienes permiso para ver esta actividad.'
+                'message' => 'No tienes permiso para ver esta actividad.',
             ], 403);
         }
 
         return response()->json([
-            'actividad' => $actividad
+            'actividad' => $actividad,
         ]);
     }
 
@@ -159,17 +161,17 @@ class ActividadJefeController extends Controller
     {
         $jefe = $this->obtenerJefeAutenticado($request);
 
-        if (!$jefe) {
+        if (! $jefe) {
             return response()->json([
-                'message' => 'El usuario autenticado no es encargado de pasante.'
+                'message' => 'El usuario autenticado no es encargado de pasante.',
             ], 403);
         }
 
         $actividad = Actividad::where('id_actividad', $id)->first();
 
-        if (!$actividad) {
+        if (! $actividad) {
             return response()->json([
-                'message' => 'Actividad no encontrada.'
+                'message' => 'Actividad no encontrada.',
             ], 404);
         }
 
@@ -178,9 +180,9 @@ class ActividadJefeController extends Controller
             $jefe->id_usuario
         );
 
-        if (!$pasantiaActual) {
+        if (! $pasantiaActual) {
             return response()->json([
-                'message' => 'No tienes permiso para editar esta actividad.'
+                'message' => 'No tienes permiso para editar esta actividad.',
             ], 403);
         }
 
@@ -190,6 +192,7 @@ class ActividadJefeController extends Controller
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'id_pasantia' => 'required|integer|exists:pasantia,id_pasantia',
+            'avance' => 'nullable|integer|min:0|max:100',
         ]);
 
         $nuevaPasantia = $this->verificarPasantiaAsignada(
@@ -197,9 +200,9 @@ class ActividadJefeController extends Controller
             $jefe->id_usuario
         );
 
-        if (!$nuevaPasantia) {
+        if (! $nuevaPasantia) {
             return response()->json([
-                'message' => 'No puedes mover la actividad a una pasantía que no tienes asignada.'
+                'message' => 'No puedes mover la actividad a una pasantía que no tienes asignada.',
             ], 403);
         }
 
@@ -209,13 +212,14 @@ class ActividadJefeController extends Controller
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'id_pasantia' => $request->id_pasantia,
+            'avance' => $request->avance ?? $actividad->avance,
         ]);
 
         $actividad->load('pasantia');
 
         return response()->json([
             'message' => 'Actividad actualizada correctamente.',
-            'actividad' => $actividad
+            'actividad' => $actividad,
         ]);
     }
 
@@ -223,17 +227,17 @@ class ActividadJefeController extends Controller
     {
         $jefe = $this->obtenerJefeAutenticado($request);
 
-        if (!$jefe) {
+        if (! $jefe) {
             return response()->json([
-                'message' => 'El usuario autenticado no es encargado de pasante.'
+                'message' => 'El usuario autenticado no es encargado de pasante.',
             ], 403);
         }
 
         $actividad = Actividad::where('id_actividad', $id)->first();
 
-        if (!$actividad) {
+        if (! $actividad) {
             return response()->json([
-                'message' => 'Actividad no encontrada.'
+                'message' => 'Actividad no encontrada.',
             ], 404);
         }
 
@@ -242,16 +246,16 @@ class ActividadJefeController extends Controller
             $jefe->id_usuario
         );
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'No tienes permiso para eliminar esta actividad.'
+                'message' => 'No tienes permiso para eliminar esta actividad.',
             ], 403);
         }
 
         $actividad->delete();
 
         return response()->json([
-            'message' => 'Actividad eliminada correctamente.'
+            'message' => 'Actividad eliminada correctamente.',
         ]);
     }
 }

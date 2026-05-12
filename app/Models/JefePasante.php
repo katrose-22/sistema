@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class JefePasante extends Model
 {
     protected $table = 'jefe_pasante';
+
     protected $primaryKey = 'id_usuario';
 
     public $incrementing = false;
+
     protected $keyType = 'int';
+
     public $timestamps = false;
 
     protected $fillable = [

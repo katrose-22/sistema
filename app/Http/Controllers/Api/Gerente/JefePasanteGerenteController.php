@@ -19,16 +19,16 @@ class JefePasanteGerenteController extends Controller
 
         $gerente = Gerente::where('id_usuario', $usuario->id_usuario)->first();
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
-        if (!$gerente->id_empresa) {
+        if (! $gerente->id_empresa) {
             return response()->json([
                 'message' => 'Primero debe registrar una empresa.',
-                'encargados' => []
+                'encargados' => [],
             ], 409);
         }
 
@@ -37,7 +37,7 @@ class JefePasanteGerenteController extends Controller
             ->get();
 
         return response()->json([
-            'encargados' => $encargados
+            'encargados' => $encargados,
         ]);
     }
 
@@ -58,15 +58,15 @@ class JefePasanteGerenteController extends Controller
 
             $gerente = Gerente::where('id_usuario', $usuarioAutenticado->id_usuario)->first();
 
-            if (!$gerente) {
+            if (! $gerente) {
                 return response()->json([
-                    'message' => 'El usuario autenticado no es gerente.'
+                    'message' => 'El usuario autenticado no es gerente.',
                 ], 403);
             }
 
-            if (!$gerente->id_empresa) {
+            if (! $gerente->id_empresa) {
                 return response()->json([
-                    'message' => 'Primero debe registrar una empresa antes de agregar encargados.'
+                    'message' => 'Primero debe registrar una empresa antes de agregar encargados.',
                 ], 409);
             }
 
@@ -74,9 +74,9 @@ class JefePasanteGerenteController extends Controller
                 ->where('habilitado', true)
                 ->first();
 
-            if (!$rolEncargado) {
+            if (! $rolEncargado) {
                 return response()->json([
-                    'message' => 'El rol Encargado de Pasante no existe o está deshabilitado.'
+                    'message' => 'El rol Encargado de Pasante no existe o está deshabilitado.',
                 ], 422);
             }
 
@@ -110,7 +110,7 @@ class JefePasanteGerenteController extends Controller
                         'abreviacion' => $rolEncargado->abreviacion,
                     ],
                 ],
-                'encargado' => $encargado
+                'encargado' => $encargado,
             ], 201);
         });
     }

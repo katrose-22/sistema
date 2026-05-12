@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BoletaInscripcion extends Model
 {
     protected $table = 'boleta_inscripcion';
+
     protected $primaryKey = 'id_boleta';
 
     public $timestamps = false;

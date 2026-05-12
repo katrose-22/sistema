@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Pasantia extends Model
 {
     protected $table = 'pasantia';
+
     protected $primaryKey = 'id_pasantia';
 
     public $timestamps = false;
@@ -46,7 +47,7 @@ class Pasantia extends Model
 
     public function getDocumentoUrlAttribute()
     {
-        if (!$this->documento_path) {
+        if (! $this->documento_path) {
             return null;
         }
 

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Comentario extends Model
 {
     protected $table = 'comentario';
+
     protected $primaryKey = 'id_comentario';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -15,6 +17,6 @@ class Comentario extends Model
         'fecha',
         'puntuacion',
         'id_pasante',
-        'id_pasantia'
+        'id_pasantia',
     ];
 }
