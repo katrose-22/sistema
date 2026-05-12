@@ -20,29 +20,29 @@ class Pasante extends Model
         'id_institucion'
     ];
 
-    
-  public function usuario()
-{
-    return $this->belongsTo(Usuario::class, 'id_usuario');
-}
 
-public function institucion()
-{
-    return $this->belongsTo(InstitucionAcademica::class, 'id_institucion');
-}
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
+    }
 
-public function boletas()
-{
-    return $this->hasMany(BoletaInscripcion::class, 'id_pasante');
-}
+    public function institucion()
+    {
+        return $this->belongsTo(InstitucionAcademica::class, 'id_institucion');
+    }
 
-public function comentarios()
-{
-    return $this->hasMany(Comentario::class, 'id_pasante');
-}
+    public function boletas()
+    {
+        return $this->hasMany(BoletaInscripcion::class, 'id_pasante');
+    }
 
-public function hojaVida()
-{
-    return $this->hasOne(HojaVida::class, 'id_pasante');
-}
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'id_pasante');
+    }
+
+    public function hojaVida()
+    {
+        return $this->hasOne(HojaVida::class, 'id_pasante');
+    }
 }

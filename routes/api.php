@@ -1,25 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-
-use App\Http\Controllers\Api\Gerente\GerenteDashboardController;
 use App\Http\Controllers\Api\Gerente\EmpresaGerenteController;
-use App\Http\Controllers\Api\Gerente\PasantiaGerenteController;
+use App\Http\Controllers\Api\Gerente\GerenteDashboardController;
 use App\Http\Controllers\Api\Gerente\JefePasanteGerenteController;
+use App\Http\Controllers\Api\Gerente\PasantiaGerenteController;
 use App\Http\Controllers\Api\Jefe\ActividadJefeController;
-use App\Http\Controllers\Api\Pasante\PasanteDashboardController;
-use App\Http\Controllers\Api\Pasante\PerfilPasanteController;
-use App\Http\Controllers\Api\Pasante\HojaVidaController;
-use App\Http\Controllers\Api\Pasante\PasantiaPasanteController;
 use App\Http\Controllers\Api\Pasante\BoletaPasanteController;
-use App\Http\Controllers\Api\Pasante\SeguimientoPasanteController;
-use App\Http\Controllers\Api\Pasante\InformeFinalPasanteController;
 use App\Http\Controllers\Api\Pasante\ComentarioPasanteController;
+use App\Http\Controllers\Api\Pasante\HojaVidaController;
+use App\Http\Controllers\Api\Pasante\InformeFinalPasanteController;
+use App\Http\Controllers\Api\Pasante\PasanteDashboardController;
+use App\Http\Controllers\Api\Pasante\PasantiaPasanteController;
+use App\Http\Controllers\Api\Pasante\PerfilPasanteController;
+use App\Http\Controllers\Api\Pasante\SeguimientoPasanteController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
     return response()->json([
-        'message' => 'API funcionando correctamente'
+        'message' => 'API funcionando correctamente',
     ]);
 });
 
