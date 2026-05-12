@@ -21,16 +21,16 @@ class EmpresaGerenteController extends Controller
             ->first();
 
         if ($gerente) {
-            if (!$gerente->empresa) {
+            if (! $gerente->empresa) {
                 return response()->json([
                     'message' => 'El gerente todavía no tiene una empresa registrada.',
-                    'empresa' => null
+                    'empresa' => null,
                 ], 404);
             }
 
             return response()->json([
                 'message' => 'Empresa encontrada correctamente.',
-                'empresa' => $gerente->empresa
+                'empresa' => $gerente->empresa,
             ]);
         }
 
@@ -39,21 +39,21 @@ class EmpresaGerenteController extends Controller
             ->first();
 
         if ($encargado) {
-            if (!$encargado->empresa) {
+            if (! $encargado->empresa) {
                 return response()->json([
                     'message' => 'El encargado todavía no tiene empresa asignada.',
-                    'empresa' => null
+                    'empresa' => null,
                 ], 404);
             }
 
             return response()->json([
                 'message' => 'Empresa encontrada correctamente.',
-                'empresa' => $encargado->empresa
+                'empresa' => $encargado->empresa,
             ]);
         }
 
         return response()->json([
-            'message' => 'El usuario autenticado no pertenece a una empresa.'
+            'message' => 'El usuario autenticado no pertenece a una empresa.',
         ], 403);
     }
 
@@ -72,15 +72,15 @@ class EmpresaGerenteController extends Controller
 
             $gerente = Gerente::where('id_usuario', $usuario->id_usuario)->first();
 
-            if (!$gerente) {
+            if (! $gerente) {
                 return response()->json([
-                    'message' => 'El usuario autenticado no es gerente.'
+                    'message' => 'El usuario autenticado no es gerente.',
                 ], 403);
             }
 
             if ($gerente->id_empresa) {
                 return response()->json([
-                    'message' => 'Este gerente ya tiene una empresa registrada.'
+                    'message' => 'Este gerente ya tiene una empresa registrada.',
                 ], 409);
             }
 
@@ -101,7 +101,7 @@ class EmpresaGerenteController extends Controller
                     'id_usuario' => $gerente->id_usuario,
                     'cargo' => $gerente->cargo,
                     'id_empresa' => $gerente->id_empresa,
-                ]
+                ],
             ], 201);
         });
     }
@@ -114,15 +114,15 @@ class EmpresaGerenteController extends Controller
             ->where('id_usuario', $usuario->id_usuario)
             ->first();
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
-        if (!$gerente->empresa) {
+        if (! $gerente->empresa) {
             return response()->json([
-                'message' => 'No existe una empresa registrada para editar.'
+                'message' => 'No existe una empresa registrada para editar.',
             ], 404);
         }
 
@@ -149,7 +149,7 @@ class EmpresaGerenteController extends Controller
 
         return response()->json([
             'message' => 'Empresa actualizada correctamente.',
-            'empresa' => $empresa
+            'empresa' => $empresa,
         ]);
     }
 
@@ -162,15 +162,15 @@ class EmpresaGerenteController extends Controller
                 ->where('id_usuario', $usuario->id_usuario)
                 ->first();
 
-            if (!$gerente) {
+            if (! $gerente) {
                 return response()->json([
-                    'message' => 'El usuario autenticado no es gerente.'
+                    'message' => 'El usuario autenticado no es gerente.',
                 ], 403);
             }
 
-            if (!$gerente->empresa) {
+            if (! $gerente->empresa) {
                 return response()->json([
-                    'message' => 'No existe una empresa registrada para eliminar.'
+                    'message' => 'No existe una empresa registrada para eliminar.',
                 ], 404);
             }
 
@@ -182,7 +182,7 @@ class EmpresaGerenteController extends Controller
             $empresa->delete();
 
             return response()->json([
-                'message' => 'Empresa eliminada correctamente.'
+                'message' => 'Empresa eliminada correctamente.',
             ]);
         });
     }

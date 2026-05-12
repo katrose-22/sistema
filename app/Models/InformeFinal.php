@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class InformeFinal extends Model
 {
     protected $table = 'informe_final';
+
     protected $primaryKey = 'id_informe';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -16,6 +18,6 @@ class InformeFinal extends Model
         'descripcion',
         'nota',
         'id_usuario',
-        'id_boleta'
+        'id_boleta',
     ];
 }

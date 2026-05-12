@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Gerente;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gerente;
-use App\Models\JefePasante;
 use App\Models\Pasantia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,29 +23,29 @@ class PasantiaGerenteController extends Controller
     {
         $gerente = $this->obtenerGerenteAutenticado($request);
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
-        if (!$gerente->id_empresa) {
+        if (! $gerente->id_empresa) {
             return response()->json([
                 'message' => 'Primero debe registrar una empresa.',
-                'pasantias' => []
+                'pasantias' => [],
             ], 409);
         }
 
         $pasantias = Pasantia::with([
-                'empresa',
-                'jefePasante.usuario'
-            ])
+            'empresa',
+            'jefePasante.usuario',
+        ])
             ->where('id_empresa', $gerente->id_empresa)
             ->orderByDesc('id_pasantia')
             ->get();
 
         return response()->json([
-            'pasantias' => $pasantias
+            'pasantias' => $pasantias,
         ]);
     }
 
@@ -54,15 +53,15 @@ class PasantiaGerenteController extends Controller
     {
         $gerente = $this->obtenerGerenteAutenticado($request);
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
-        if (!$gerente->id_empresa) {
+        if (! $gerente->id_empresa) {
             return response()->json([
-                'message' => 'Primero debe registrar una empresa antes de publicar pasantías.'
+                'message' => 'Primero debe registrar una empresa antes de publicar pasantías.',
             ], 409);
         }
 
@@ -75,14 +74,14 @@ class PasantiaGerenteController extends Controller
 
             'estado' => [
                 'nullable',
-                Rule::in(['habilitada', 'inhabilitada'])
+                Rule::in(['habilitada', 'inhabilitada']),
             ],
 
             'id_jefe' => [
                 'required',
                 'integer',
                 Rule::exists('jefe_pasante', 'id_usuario')
-                    ->where('id_empresa', $gerente->id_empresa)
+                    ->where('id_empresa', $gerente->id_empresa),
             ],
 
             'documento' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:5120',
@@ -118,12 +117,12 @@ class PasantiaGerenteController extends Controller
 
             $pasantia->load([
                 'empresa',
-                'jefePasante.usuario'
+                'jefePasante.usuario',
             ]);
 
             return response()->json([
                 'message' => 'Pasantía registrada correctamente.',
-                'pasantia' => $pasantia
+                'pasantia' => $pasantia,
             ], 201);
         });
     }
@@ -132,28 +131,28 @@ class PasantiaGerenteController extends Controller
     {
         $gerente = $this->obtenerGerenteAutenticado($request);
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
         $pasantia = Pasantia::with([
-                'empresa',
-                'jefePasante.usuario'
-            ])
+            'empresa',
+            'jefePasante.usuario',
+        ])
             ->where('id_empresa', $gerente->id_empresa)
             ->where('id_pasantia', $id)
             ->first();
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'Pasantía no encontrada.'
+                'message' => 'Pasantía no encontrada.',
             ], 404);
         }
 
         return response()->json([
-            'pasantia' => $pasantia
+            'pasantia' => $pasantia,
         ]);
     }
 
@@ -161,9 +160,9 @@ class PasantiaGerenteController extends Controller
     {
         $gerente = $this->obtenerGerenteAutenticado($request);
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
@@ -171,9 +170,9 @@ class PasantiaGerenteController extends Controller
             ->where('id_pasantia', $id)
             ->first();
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'Pasantía no encontrada.'
+                'message' => 'Pasantía no encontrada.',
             ], 404);
         }
 
@@ -186,14 +185,14 @@ class PasantiaGerenteController extends Controller
 
             'estado' => [
                 'required',
-                Rule::in(['habilitada', 'inhabilitada'])
+                Rule::in(['habilitada', 'inhabilitada']),
             ],
 
             'id_jefe' => [
                 'required',
                 'integer',
                 Rule::exists('jefe_pasante', 'id_usuario')
-                    ->where('id_empresa', $gerente->id_empresa)
+                    ->where('id_empresa', $gerente->id_empresa),
             ],
 
             'documento' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:5120',
@@ -232,12 +231,12 @@ class PasantiaGerenteController extends Controller
 
             $pasantia->load([
                 'empresa',
-                'jefePasante.usuario'
+                'jefePasante.usuario',
             ]);
 
             return response()->json([
                 'message' => 'Pasantía actualizada correctamente.',
-                'pasantia' => $pasantia
+                'pasantia' => $pasantia,
             ]);
         });
     }
@@ -246,16 +245,16 @@ class PasantiaGerenteController extends Controller
     {
         $gerente = $this->obtenerGerenteAutenticado($request);
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
         $request->validate([
             'estado' => [
                 'required',
-                Rule::in(['habilitada', 'inhabilitada'])
+                Rule::in(['habilitada', 'inhabilitada']),
             ],
         ]);
 
@@ -263,9 +262,9 @@ class PasantiaGerenteController extends Controller
             ->where('id_pasantia', $id)
             ->first();
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'Pasantía no encontrada.'
+                'message' => 'Pasantía no encontrada.',
             ], 404);
         }
 
@@ -276,7 +275,7 @@ class PasantiaGerenteController extends Controller
             'message' => $request->estado === 'habilitada'
                 ? 'Pasantía habilitada correctamente.'
                 : 'Pasantía inhabilitada correctamente.',
-            'pasantia' => $pasantia
+            'pasantia' => $pasantia,
         ]);
     }
 
@@ -284,9 +283,9 @@ class PasantiaGerenteController extends Controller
     {
         $gerente = $this->obtenerGerenteAutenticado($request);
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'El usuario autenticado no es gerente.'
+                'message' => 'El usuario autenticado no es gerente.',
             ], 403);
         }
 
@@ -294,9 +293,9 @@ class PasantiaGerenteController extends Controller
             ->where('id_pasantia', $id)
             ->first();
 
-        if (!$pasantia) {
+        if (! $pasantia) {
             return response()->json([
-                'message' => 'Pasantía no encontrada.'
+                'message' => 'Pasantía no encontrada.',
             ], 404);
         }
 
@@ -307,7 +306,7 @@ class PasantiaGerenteController extends Controller
         $pasantia->delete();
 
         return response()->json([
-            'message' => 'Pasantía eliminada correctamente.'
+            'message' => 'Pasantía eliminada correctamente.',
         ]);
     }
 }

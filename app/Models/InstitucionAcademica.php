@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class InstitucionAcademica extends Model
 {
     protected $table = 'institucion_academica';
+
     protected $primaryKey = 'id_institucion';
+
     public $timestamps = false;
 
     protected $fillable = [
         'nombre',
         'direccion',
-        'telefono'
+        'telefono',
     ];
 
     public function pasantes()

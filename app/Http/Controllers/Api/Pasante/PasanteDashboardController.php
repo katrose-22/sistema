@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Pasante;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pasante;
 use App\Models\BoletaInscripcion;
+use App\Models\Pasante;
 use Illuminate\Http\Request;
 
 class PasanteDashboardController extends Controller
@@ -17,9 +17,9 @@ class PasanteDashboardController extends Controller
             ->where('id_usuario', $usuario->id_usuario)
             ->first();
 
-        if (!$pasante) {
+        if (! $pasante) {
             return response()->json([
-                'message' => 'No se encontró el perfil de pasante'
+                'message' => 'No se encontró el perfil de pasante',
             ], 404);
         }
 
@@ -34,7 +34,7 @@ class PasanteDashboardController extends Controller
                 'tiene_hoja_vida' => $pasante->hojaVida ? true : false,
                 'tiene_boleta' => $boleta ? true : false,
             ],
-            'boleta' => $boleta
+            'boleta' => $boleta,
         ]);
     }
 }
