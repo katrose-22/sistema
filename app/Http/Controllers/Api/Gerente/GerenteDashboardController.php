@@ -17,9 +17,9 @@ class GerenteDashboardController extends Controller
             ->where('id_usuario', $usuario->id_usuario)
             ->first();
 
-        if (!$gerente) {
+        if (! $gerente) {
             return response()->json([
-                'message' => 'No se encontró el perfil de gerente'
+                'message' => 'No se encontró el perfil de gerente',
             ], 404);
         }
 
@@ -35,7 +35,7 @@ class GerenteDashboardController extends Controller
             'resumen' => [
                 'total_pasantias' => $totalPasantias,
                 'pasantias_activas' => $pasantiasActivas,
-            ]
+            ],
         ]);
     }
 
@@ -48,7 +48,7 @@ class GerenteDashboardController extends Controller
             ->first();
 
         return response()->json([
-            'gerente' => $gerente
+            'gerente' => $gerente,
         ]);
     }
 }

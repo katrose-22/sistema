@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Actividad extends Model
 {
     protected $table = 'actividad';
+
     protected $primaryKey = 'id_actividad';
 
     public $timestamps = false;
@@ -17,6 +18,7 @@ class Actividad extends Model
         'fecha_inicio',
         'fecha_fin',
         'id_pasantia',
+        'avance',
     ];
 
     public function pasantia()

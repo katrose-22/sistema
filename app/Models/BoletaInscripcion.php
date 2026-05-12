@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class BoletaInscripcion extends Model
 {
     protected $table = 'boleta_inscripcion';
+
     protected $primaryKey = 'id_boleta';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -16,7 +18,7 @@ class BoletaInscripcion extends Model
         'id_pasante',
         'id_tutor',
         'id_pasantia',
-        'id_jefe'
+        'id_jefe',
     ];
 
     public function pasante()

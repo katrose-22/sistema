@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Bitacora extends Model
 {
     protected $table = 'bitacora';
+
     protected $primaryKey = 'id_bitacora';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -16,6 +18,6 @@ class Bitacora extends Model
         'porcentaje',
         'id_boleta',
         'id_actividad',
-        'id_jefe'
+        'id_jefe',
     ];
 }

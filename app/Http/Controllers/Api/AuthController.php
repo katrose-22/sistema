@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Usuario;
-use App\Models\Pasante;
 use App\Models\Gerente;
+use App\Models\Pasante;
 use App\Models\Rol;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -18,25 +18,25 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'contrasena' => 'required'
+            'contrasena' => 'required',
         ]);
 
         $usuario = Usuario::with('rol')
             ->where('email', $request->email)
             ->first();
 
-        if (!$usuario || !Hash::check($request->contrasena, $usuario->contrasena)) {
+        if (! $usuario || ! Hash::check($request->contrasena, $usuario->contrasena)) {
 
             return response()->json([
-                'message' => 'Credenciales incorrectas'
+                'message' => 'Credenciales incorrectas',
             ], 401);
         }
 
         // verificar si el rol está habilitado
-        if (!$usuario->rol || !$usuario->rol->habilitado) {
+        if (! $usuario->rol || ! $usuario->rol->habilitado) {
 
             return response()->json([
-                'message' => 'Rol deshabilitado'
+                'message' => 'Rol deshabilitado',
             ], 403);
         }
 
@@ -76,18 +76,18 @@ class AuthController extends Controller
                 'rol' => [
                     'id_rol' => $usuario->rol->id_rol,
                     'descripcion' => $usuario->rol->descripcion,
-                    'abreviacion' => $usuario->rol->abreviacion
-                ]
+                    'abreviacion' => $usuario->rol->abreviacion,
+                ],
             ],
 
-            'redirect' => $redirect
+            'redirect' => $redirect,
         ]);
     }
 
     public function me(Request $request)
     {
         return response()->json([
-            'usuario' => $request->user()
+            'usuario' => $request->user(),
         ]);
     }
 
@@ -96,7 +96,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Sesión cerrada correctamente'
+            'message' => 'Sesión cerrada correctamente',
         ]);
     }
 
@@ -111,7 +111,7 @@ class AuthController extends Controller
 
             'tipo_usuario' => [
                 'required',
-                Rule::in(['pasante', 'gerente'])
+                Rule::in(['pasante', 'gerente']),
             ],
 
             'ci' => 'required_if:tipo_usuario,pasante|nullable|string|max:30',
@@ -139,12 +139,11 @@ class AuthController extends Controller
                 ->where('habilitado', true)
                 ->first();
 
-            if (!$rol) {
+            if (! $rol) {
                 return response()->json([
-                    'message' => 'El rol seleccionado no existe o está deshabilitado.'
+                    'message' => 'El rol seleccionado no existe o está deshabilitado.',
                 ], 422);
             }
-
 
             $usuario = Usuario::create([
                 'nombre' => $request->nombre,
@@ -154,7 +153,6 @@ class AuthController extends Controller
                 'contrasena' => Hash::make($request->password),
                 'id_rol' => $rol->id_rol,
             ]);
-
 
             if ($request->tipo_usuario === 'pasante') {
                 Pasante::create([

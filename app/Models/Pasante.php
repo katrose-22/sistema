@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pasante extends Model
 {
     protected $table = 'pasante';
+
     protected $primaryKey = 'id_pasante';
 
     public $timestamps = false;
@@ -17,32 +18,31 @@ class Pasante extends Model
         'direccion',
         'telefono',
         'id_usuario',
-        'id_institucion'
+        'id_institucion',
     ];
 
-    
-  public function usuario()
-{
-    return $this->belongsTo(Usuario::class, 'id_usuario');
-}
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'id_usuario');
+    }
 
-public function institucion()
-{
-    return $this->belongsTo(InstitucionAcademica::class, 'id_institucion');
-}
+    public function institucion()
+    {
+        return $this->belongsTo(InstitucionAcademica::class, 'id_institucion');
+    }
 
-public function boletas()
-{
-    return $this->hasMany(BoletaInscripcion::class, 'id_pasante');
-}
+    public function boletas()
+    {
+        return $this->hasMany(BoletaInscripcion::class, 'id_pasante');
+    }
 
-public function comentarios()
-{
-    return $this->hasMany(Comentario::class, 'id_pasante');
-}
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'id_pasante');
+    }
 
-public function hojaVida()
-{
-    return $this->hasOne(HojaVida::class, 'id_pasante');
-}
+    public function hojaVida()
+    {
+        return $this->hasOne(HojaVida::class, 'id_pasante');
+    }
 }
