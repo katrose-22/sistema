@@ -10,10 +10,9 @@ use App\Http\Controllers\Api\Pasante\BoletaPasanteController;
 use App\Http\Controllers\Api\Pasante\ComentarioPasanteController;
 use App\Http\Controllers\Api\Pasante\HojaVidaController;
 use App\Http\Controllers\Api\Pasante\InformeFinalPasanteController;
-use App\Http\Controllers\Api\Pasante\PasanteDashboardController;
+use App\Http\Controllers\Api\Pasante\PasanteActividadController;
 use App\Http\Controllers\Api\Pasante\PasantiaPasanteController;
 use App\Http\Controllers\Api\Pasante\PerfilPasanteController;
-use App\Http\Controllers\Api\Pasante\SeguimientoPasanteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
@@ -85,8 +84,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/inscripcion/{id_pasantia}', [BoletaPasanteController::class, 'store']);
         Route::get('/boleta', [BoletaPasanteController::class, 'show']);
 
-        Route::get('/actividades', [SeguimientoPasanteController::class, 'actividades']);
-        Route::get('/bitacora', [SeguimientoPasanteController::class, 'bitacora']);
+        Route::get('/actividades', [PasanteActividadController::class, 'index']);
+        Route::put('/actividades/{id_actividad}', [PasanteActividadController::class, 'update']);
+        Route::get('/bitacora', [PasanteActividadController::class, 'bitacora']);
 
         Route::get('/informe-final', [InformeFinalPasanteController::class, 'show']);
         Route::post('/informe-final', [InformeFinalPasanteController::class, 'store']);
