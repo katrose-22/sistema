@@ -53,4 +53,5 @@ class Pasantia extends Model
 
         return Storage::url($this->documento_path);
     }
+    
 }

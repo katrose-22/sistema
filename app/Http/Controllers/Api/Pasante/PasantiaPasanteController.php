@@ -6,36 +6,43 @@ use App\Http\Controllers\Controller;
 use App\Models\Pasantia;
 use Illuminate\Http\Request;
 
+use App\Models\Pasantia;
+use Illuminate\Http\Request;
+
+
+
 class PasantiaPasanteController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $pasantias = Pasantia::with(['empresa', 'jefePasante'])
+        $pasantias = Pasantia::with('empresa')
             ->where('estado', 'habilitada')
-            ->orderBy('fecha_inicio', 'desc')
+            ->orderBy('id_pasantia', 'desc')
             ->get();
 
         return response()->json([
-            'message' => 'Listado de pasantías disponibles',
-            'pasantias' => $pasantias,
+            'success' => true,
+            'message' => 'Pasantías disponibles obtenidas correctamente',
+            'data' => $pasantias
         ]);
     }
 
-    public function show($id_pasantia)
+    public function show($id)
     {
-        $pasantia = Pasantia::with(['empresa', 'jefePasante', 'actividades'])
-            ->where('id_pasantia', $id_pasantia)
+        $pasantia = Pasantia::with('empresa')
+            ->where('id_pasantia', $id)
             ->first();
 
-        if (! $pasantia) {
+        if (!$pasantia) {
             return response()->json([
-                'message' => 'Pasantía no encontrada',
+                'success' => false,
+                'message' => 'Pasantía no encontrada'
             ], 404);
         }
 
         return response()->json([
-            'message' => 'Detalle de la pasantía',
-            'pasantia' => $pasantia,
+            'success' => true,
+            'data' => $pasantia
         ]);
     }
 }

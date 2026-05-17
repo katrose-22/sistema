@@ -41,6 +41,7 @@ class Pasante extends Model
         return $this->hasMany(Comentario::class, 'id_pasante');
     }
 
+>>>>>>> 0be9f3a1ff655362e4e010026a5f6d36b2e4dfd1
     public function hojaVida()
     {
         return $this->hasOne(HojaVida::class, 'id_pasante');
